@@ -1,3 +1,13 @@
+## 3.3.0+dlct.1 (DayLight Creative Technologies fork)
+- Migrated to Flutter's built-in Kotlin support per the official plugin-author
+  guide (https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors):
+  removed the `kotlin-android` plugin application and the `kotlinOptions`
+  block, and added a top-level `kotlin { compilerOptions { jvmTarget } }`
+  block. Flutter warns that a future release will refuse to build apps whose
+  plugins apply the Kotlin Gradle Plugin directly; this closes that warning
+  for consuming apps on AGP 9 with `android.builtInKotlin=false`. Forward
+  migration, not a workaround — no retire condition.
+
 ## 3.3.0
 - Created `AppTheme` style in the `example` app for MSAL WebView in Android. [#issue/119](https://github.com/nayanAubie/msal_auth/issues/119)
 - Added support for customised webview in iOS and macOS. [#issue/90](https://github.com/nayanAubie/msal_auth/issues/90)

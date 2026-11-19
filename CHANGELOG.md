@@ -1,3 +1,22 @@
+## 3.3.0+dlct.2 (DayLight Creative Technologies fork)
+- The iOS plugin ships a Swift package, so an app that builds with Swift Package Manager
+  links it without CocoaPods (SSK SWIFTPM-2026-001 REQ-SWIFTPM-2026-001-009):
+  `ios/msal_auth/Package.swift` (tools 5.9, iOS 14.0, the `FlutterFramework` path
+  dependency, product `msal-auth`) depends on MSAL's own Swift package
+  (`microsoft-authentication-library-for-objc`, `.upToNextMinor(from: "2.2.0")`, the
+  podspec's `~> 2.2.0`, product `MSAL`). It is the fork's own manifest, not upstream
+  3.5.x's: upstream's requires MSAL 2.11 or later and 3.4.0-3.5.3 change native
+  behaviour, which stays its own change (SSK gap #1415).
+- Sources moved from `ios/Classes` to `ios/msal_auth/Sources/msal_auth` (the Flutter
+  plugin SwiftPM layout); `ios/msal_auth.podspec` compiles the same files, so a CocoaPods
+  build is unchanged. The package processes the plugin's `PrivacyInfo.xcprivacy` (moved
+  from `ios/Resources`), so the app carries `msal_auth_msal_auth.bundle`.
+- The example app's Runner targets iOS 14.0, as its Podfile already did: MSAL needs it.
+- CI (`.github/workflows/build.yml`): `SwiftPM build (iOS)` builds the example with Swift
+  Package Manager, fails unless Flutter's generated plugin package links `msal_auth`
+  through its Swift package, and fails unless the app carries the privacy manifest bundle;
+  `CocoaPods build (iOS)` builds it with CocoaPods.
+
 ## 3.3.0+dlct.1 (DayLight Creative Technologies fork)
 - Migrated to Flutter's built-in Kotlin support per the official plugin-author
   guide (https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors):
